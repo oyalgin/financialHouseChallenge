@@ -1,0 +1,4 @@
+rdpPymnt:
+    baseUrl: https://sandbox-reporting.rpdpymnt.com
+    serviceEndpoints:
+        login: /api/v3/merchant/user/login
