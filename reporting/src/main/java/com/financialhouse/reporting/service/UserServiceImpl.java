@@ -6,6 +6,7 @@ import com.financialhouse.reporting.externalApi.ExternalApiService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 @Service
 @AllArgsConstructor
@@ -14,7 +15,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     ExternalApiService externalApiService;
     @Override
-    public LoginResponseDTO login(LoginRequestDTO request) {
+    public Mono<LoginResponseDTO> login(LoginRequestDTO request) {
         //Repo check
         return externalApiService.userLogin(request);
     }

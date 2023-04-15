@@ -7,6 +7,7 @@ import com.financialhouse.reporting.util.CommonConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -18,9 +19,11 @@ public class UserApiController {
     UserService userService;
 
     @PostMapping(value = "/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO)
+    public Mono<ResponseEntity<LoginResponseDTO>> login(@RequestBody LoginRequestDTO loginRequestDTO)
     {
-       return ResponseEntity.ok(userService.login(loginRequestDTO));
+       return  userService.login(loginRequestDTO)
+               .map(ResponseEntity::ok)
+               .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
 }
