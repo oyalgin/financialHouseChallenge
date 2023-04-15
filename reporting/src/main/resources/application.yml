@@ -2,3 +2,19 @@ rdpPymnt:
     baseUrl: https://sandbox-reporting.rpdpymnt.com
     serviceEndpoints:
         login: /api/v3/merchant/user/login
+server:
+    port: 8443
+    ssl:
+        enabled: true
+        key-alias: myapp
+        key-store-type: JKS
+        key-store: file:C:\Users\OlcayYalgin\keystore.jks
+        key-store-password: Oznur_6237
+logging:
+    level:
+        org.springframework: ERROR
+        com.financialhouse.reporting: DEBUG
+    pattern:
+        console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+        file: "%d %p %c{1.} [%t] %m%n"
+    file: app.log
