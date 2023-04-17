@@ -2,6 +2,7 @@ rdpPymnt:
     baseUrl: https://sandbox-reporting.rpdpymnt.com
     serviceEndpoints:
         login: /api/v3/merchant/user/login
+        transactionReport: /api/v3/transactions/report
 server:
     port: 8443
     ssl:
