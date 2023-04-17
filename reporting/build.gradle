@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.0.5'
 	id 'io.spring.dependency-management' version '1.1.0'
+	id 'com.adarshr.test-logger' version '3.2.0'
 }
 
 group = 'com.financialhouse'
@@ -29,6 +30,8 @@ dependencies {
 	implementation 'org.slf4j:slf4j-api:2.0.5'
 	implementation 'org.springframework.boot:spring-boot-starter-validation:3.0.4'
 }
+
+
 
 tasks.named('test') {
 	useJUnitPlatform()

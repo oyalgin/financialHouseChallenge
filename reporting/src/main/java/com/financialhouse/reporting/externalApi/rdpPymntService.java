@@ -45,6 +45,9 @@ public class rdpPymntService implements ExternalApiService{
     @Value("${rdpPymnt.serviceEndpoints.transaction}")
     private String transaction;
 
+    @Value("${rdpPymnt.serviceEndpoints.client}")
+    private String client;
+
     @Override
     public Mono<LoginResponseDTO> userLogin(LoginRequestDTO request) {
         return webClient.post()
@@ -89,5 +92,15 @@ public class rdpPymntService implements ExternalApiService{
                 .bodyValue(request)
                 .retrieve()
                 .bodyToMono(TransactionResponseDTO.class);
+    }
+
+    @Override
+    public Mono<ClientResponseDTO> getClient(TransactionRequestDTO request, String token) {
+        return webClient.post()
+                .uri(baseUrl + client)
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .bodyValue(request)
+                .retrieve()
+                .bodyToMono(ClientResponseDTO.class);
     }
 }

@@ -31,8 +31,15 @@ public class ReportApiController {
     }
 
     @PostMapping("/transaction")
-    public Mono<ResponseEntity<TransactionResponseDTO>> getTransactionsList(@RequestHeader(name = CommonConstants.AUTHORIZATION) String token, @RequestBody TransactionRequestDTO request) {
+    public Mono<ResponseEntity<TransactionResponseDTO>> getTransaction(@RequestHeader(name = CommonConstants.AUTHORIZATION) String token, @RequestBody TransactionRequestDTO request) {
         return externalApiService.getTransactionDetail(request,token)
+                .map(response -> ResponseEntity.ok().body(response))
+                .onErrorResume(error -> Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()));
+    }
+
+    @PostMapping("/client")
+    public Mono<ResponseEntity<ClientResponseDTO>> getClient(@RequestHeader(name = CommonConstants.AUTHORIZATION) String token, @RequestBody TransactionRequestDTO request) {
+        return externalApiService.getClient(request,token)
                 .map(response -> ResponseEntity.ok().body(response))
                 .onErrorResume(error -> Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()));
     }
