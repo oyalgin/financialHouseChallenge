@@ -42,6 +42,9 @@ public class rdpPymntService implements ExternalApiService{
     @Value("${rdpPymnt.serviceEndpoints.transactionsList}")
     private String transactionListEndpoint;
 
+    @Value("${rdpPymnt.serviceEndpoints.transaction}")
+    private String transaction;
+
     @Override
     public Mono<LoginResponseDTO> userLogin(LoginRequestDTO request) {
         return webClient.post()
@@ -55,15 +58,15 @@ public class rdpPymntService implements ExternalApiService{
     @Override
     public Mono<TransactionReportResponseDTO> getTransactionsReport(TransactionReportRequestDTO request, String token) {
 
-       //return Mono.fromSupplier(TransactionsReportResponseMockData::createMockData);
+       return Mono.fromSupplier(TransactionsReportResponseMockData::createMockData);
 
-        return webClient.post()
+       /** return webClient.post()
                 .uri(baseUrl + transactionReportEndpoint)
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .bodyValue(BodyInserters.fromValue(request))
                 .retrieve()
-                .bodyToMono(TransactionReportResponseDTO.class);
+                .bodyToMono(TransactionReportResponseDTO.class);*/
     }
 
     @Override
@@ -76,5 +79,15 @@ public class rdpPymntService implements ExternalApiService{
                 .retrieve()
                 .bodyToMono(TransactionListResponseDTO.class);
 
+    }
+
+    @Override
+    public Mono<TransactionResponseDTO> getTransactionDetail(TransactionRequestDTO request, String token) {
+        return webClient.post()
+                .uri(baseUrl + transaction)
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .bodyValue(request)
+                .retrieve()
+                .bodyToMono(TransactionResponseDTO.class);
     }
 }

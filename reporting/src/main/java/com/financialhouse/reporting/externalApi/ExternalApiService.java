@@ -13,4 +13,5 @@ public interface ExternalApiService {
 
     Mono<TransactionListResponseDTO> getTransactionsList(TransactionListRequestDTO request, String token);
 
+    Mono<TransactionResponseDTO> getTransactionDetail(TransactionRequestDTO request, String token);
 }

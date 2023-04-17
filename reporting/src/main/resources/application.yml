@@ -4,6 +4,7 @@ rdpPymnt:
         login: /api/v3/merchant/user/login
         transactionReport: /api/v3/transactions/report
         transactionsList: /api/v3/transaction/list
+        transaction: /api/v3/transaction
 server:
     port: 8443
     ssl:

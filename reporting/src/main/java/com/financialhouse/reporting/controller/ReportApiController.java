@@ -1,9 +1,6 @@
 package com.financialhouse.reporting.controller;
 
-import com.financialhouse.reporting.dto.TransactionListRequestDTO;
-import com.financialhouse.reporting.dto.TransactionListResponseDTO;
-import com.financialhouse.reporting.dto.TransactionReportRequestDTO;
-import com.financialhouse.reporting.dto.TransactionReportResponseDTO;
+import com.financialhouse.reporting.dto.*;
 import com.financialhouse.reporting.externalApi.ExternalApiService;
 import com.financialhouse.reporting.util.CommonConstants;
 import jakarta.validation.Valid;
@@ -31,6 +28,13 @@ public class ReportApiController {
         return externalApiService.getTransactionsList(request,token)
                .map(response -> ResponseEntity.ok().body(response))
                .onErrorResume(error -> Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()));
+    }
+
+    @PostMapping("/transaction")
+    public Mono<ResponseEntity<TransactionResponseDTO>> getTransactionsList(@RequestHeader(name = CommonConstants.AUTHORIZATION) String token, @RequestBody TransactionRequestDTO request) {
+        return externalApiService.getTransactionDetail(request,token)
+                .map(response -> ResponseEntity.ok().body(response))
+                .onErrorResume(error -> Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()));
     }
 
 }
