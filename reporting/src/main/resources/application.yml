@@ -12,7 +12,7 @@ server:
         enabled: true
         key-alias: myapp
         key-store-type: JKS
-        key-store: file:C:\Users\OlcayYalgin\keystore.jks
+        key-store: classpath:keystore.jks
         key-store-password: Oznur_6237
 logging:
     level:
