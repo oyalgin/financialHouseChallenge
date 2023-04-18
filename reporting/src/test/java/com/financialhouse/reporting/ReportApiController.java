@@ -19,9 +19,10 @@ import static org.mockito.Mockito.when;
 public class ReportApiController extends BaseTest{
 
     @Test
-    @DisplayName("Should return mocked response when a valid request provides")
+    @DisplayName("Should return transaction report when /api/transactions/report endpoint is requested with valid token and body")
     public void shouldReturn_MockedResponse_When_ValidRequestAndTokenProvided() {
         // given
+        // Transaction report request
         TransactionReportRequestDTO request = TransactionReportRequestDTO.builder()
                 .fromDate(LocalDate.of(2015, 7, 1))
                 .toDate(LocalDate.of(2015, 10, 1))
@@ -31,8 +32,9 @@ public class ReportApiController extends BaseTest{
 
         String token = "test-token";
 
+        // Transaction report response
         TransactionReportResponseDTO response = TransactionsReportResponseMockData.createMockData();
-
+        //mock
         when(externalApiService.getTransactionsReport(Mockito.any(TransactionReportRequestDTO.class), anyString()))
                 .thenReturn(Mono.just(response));
         //when
@@ -49,6 +51,7 @@ public class ReportApiController extends BaseTest{
     }
 
     @Test
+    @DisplayName("Should return Client customer information when /api/client endpoint is requested with valid trancactionId")
     public void shouldReturn_MockedClientResponseDTO_WhenExternalApiServiceReturnsSuccess() {
         // Given
         String token = "test-token";
@@ -69,7 +72,7 @@ public class ReportApiController extends BaseTest{
         ClientResponseDTO response = new ClientResponseDTO();
         response.setCustomerInfo(customerInfo);
 
-        when(externalApiService.getClient(Mockito.any(TransactionRequestDTO.class), anyString()))
+        when(externalApiService.getClient(request,token))
                 .thenReturn(Mono.just(response));
 
         // when
@@ -84,6 +87,7 @@ public class ReportApiController extends BaseTest{
     }
 
     @Test
+    @DisplayName("Should return internal server errror when external client returns not expected result and /api/client endpoint is requested w")
     public void getClient_ReturnsInternalServerError_WhenExternalApiServiceReturnsError() {
         // Given
         String token = "test-token";
@@ -102,6 +106,7 @@ public class ReportApiController extends BaseTest{
     }
 
     @Test
+    @DisplayName("Should return transaction when /api/trancaction endpoint is requested with valid token and body")
     void getTransaction_shouldReturnTransactionResponseDTO() {
 
         TransactionRequestDTO requestDTO = new TransactionRequestDTO();
@@ -129,6 +134,7 @@ public class ReportApiController extends BaseTest{
     }
 
     @Test
+    @DisplayName("Should return internal server error when /api/trancaction endpoint is requested but external endpoint returns not expected result")
     public void getTransactionDetail_ReturnsInternalServerError_WhenExternalApiServiceReturnsError() {
         // Given
         String token = "test-token";
@@ -146,6 +152,7 @@ public class ReportApiController extends BaseTest{
                 .expectStatus().is5xxServerError();
     }
     @Test
+    @DisplayName("Should return transaction list  when /api/trancaction/list endpoint is requested with valid token and body")
     void testGetTransactionsList() {
         // Given
         // Create a mock response
@@ -168,7 +175,6 @@ public class ReportApiController extends BaseTest{
 
         when(externalApiService.getTransactionsList(request, "token"))
                 .thenReturn(Mono.just(response));
-
 
         //when
         // Send a request to the controller method using the WebTestClient
